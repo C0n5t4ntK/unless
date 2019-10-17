@@ -1,0 +1,100 @@
+{% extends "base" %}
+
+{% block title %} {{category}} {% endblock title %}
+
+{% block extra_css %}
+<style type="text/css">
+.paginations a {
+  padding: 1rem, 1rem;
+  margin: 0 6px;
+  font-size: 1.5rem;
+  color: #555;
+  border: none;
+  text-align: center;
+  background: transparent;
+}
+</style>
+{% endblock extra_css %}
+
+{% block page_header %}
+  <header class="masthead" style="background-image: url('/img/article_list.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 col-md-11 mx-auto">
+          <div class="site-heading">
+            <h1>{{category}}</h1>
+            <span class="subheading"><h2>Enjoy Life</h2></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock page_header %}
+
+{% block content %}
+  <div class="container">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item col-6 col-md-2">
+        <a class="nav-link {%if category == 'Articles'%}active{%endif%}" href="/article?pg=1" style="text-align: center;">All<br/>Articles</a>
+      </li>
+      <li class="nav-item col-6 col-md-2">
+        <a class="nav-link {%if category == 'Learning Summary'%}active{%endif%}" href="/learning-summary?pg=1" style="text-align: center;">Learning<br/>Summary</a>
+      </li>
+      <li class="nav-item col-6 col-md-2">
+        <a class="nav-link {%if category == 'Experience Sharing'%}active{%endif%}" href="/experience-sharing?pg=1" style="text-align: center;">Experience<br/>Sharing</a>
+      </li>
+      <li class="nav-item col-6 col-md-2">
+        <a class="nav-link {%if category == 'Geeky Recording'%}active{%endif%}" href="/geeky-recording?pg=1" style="text-align: center;">Geeky<br/>Recording</a>
+      </li>
+      <li class="nav-item col-6 col-md-2">
+        <a class="nav-link {%if category == 'Miscellaneous Mood'%}active{%endif%}" href="/miscellaneous-mood?pg=1" style="text-align: center;">Miscellaneous<br/>Mood</a>
+      </li>
+      <li class="nav-item col-6 col-md-2">
+        <a class="nav-link {%if category == 'Art Review'%}active{%endif%}" href="/art-review?pg=1" style="text-align: center;">Art<br/>Review</a>
+      </li>
+    </ul>
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% if articles %}
+        {% for article in articles %}
+        <div class="post-preview">
+          <a href="/article/{{ article.slug_url }}">
+            <h2 class="post-title">
+              {{ article.title }}
+            </h2>
+            <h3 class="post-subtitle">
+              {{ article.subtitle}}
+            </h3>
+          </a>
+          {% if category == 'Articles' %}
+          <p class="post-meta">
+            Created on {{ article.create_time | truncate(length=10, end="") | replace(from="...", to="")}} | Category: {{article.category}} | Tag: {{article.tag}}
+          </p>
+          {% else %}
+          <p class="post-meta">
+            Created on {{ article.create_time | truncate(length=10, end="") | replace(from="...", to="")}} | Tag: {{article.tag}}
+          </p>
+          {% endif %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Oh... Vacuum!</p>
+        <p>See something else~</p>
+        <p>I'll write some soon ^_^</p>
+        {% endif %}
+      </div>
+    </div>
+    <nav style="text-align: center;">
+    <div class="row">
+      <ul class="pagination col-lg-12 col-md-12 col-12" style="padding:0;">
+        <li class="page-item paginations col-lg-3 col-md-3 col-3 mx-auto"><a class="page-link" href="/{%if category == 'Articles'%}article{%endif%}{%if category == 'Learning Summary'%}learning-summary{%endif%}{%if category == 'Experience Sharing'%}experience-sharing{%endif%}{%if category == 'Geeky Recording'%}geeky-recording{%endif%}{%if category == 'Miscellaneous Mood'%}miscellaneous-mood{%endif%}{%if category == 'Art Review'%}art-review{%endif%}?pg=1" style="padding:0;">First</a></li>
+        <li class="page-item paginations col-lg-2 col-md-2 col-2 mx-auto">{% if pg != 1 %}<a class="page-link" href="/{%if category == 'Articles'%}article{%endif%}{%if category == 'Learning Summary'%}learning-summary{%endif%}{%if category == 'Experience Sharing'%}experience-sharing{%endif%}{%if category == 'Geeky Recording'%}geeky-recording{%endif%}{%if category == 'Miscellaneous Mood'%}miscellaneous-mood{%endif%}{%if category == 'Art Review'%}art-review{%endif%}?pg={{ pg - 1 }}" style="padding:0;">&larr;</a>{% else %}&larr;{% endif %}</li>
+        <li class="page-item paginations col-lg-2 col-md-2 col-2 mx-auto"><a class="page-link" href="/{%if category == 'Articles'%}article{%endif%}{%if category == 'Learning Summary'%}learning-summary{%endif%}{%if category == 'Experience Sharing'%}experience-sharing{%endif%}{%if category == 'Geeky Recording'%}geeky-recording{%endif%}{%if category == 'Miscellaneous Mood'%}miscellaneous-mood{%endif%}{%if category == 'Art Review'%}art-review{%endif%}?pg={{ pg }}" style="padding:0;">{{ pg }}</a></li>
+        <li class="page-item paginations col-lg-2 col-md-2 col-2 mx-auto">{% if pg != total_page %}<a class="page-link" href="/{%if category == 'Articles'%}article{%endif%}{%if category == 'Learning Summary'%}learning-summary{%endif%}{%if category == 'Experience Sharing'%}experience-sharing{%endif%}{%if category == 'Geeky Recording'%}geeky-recording{%endif%}{%if category == 'Miscellaneous Mood'%}miscellaneous-mood{%endif%}{%if category == 'Art Review'%}art-review{%endif%}?pg={{ pg + 1 }}" style="padding:0;">&rarr;</a>{% else %}&rarr;{% endif %}</li>
+        <li class="page-item paginations col-lg-3 col-md-3 col-3 mx-auto"><a class="page-link" href="/{%if category == 'Articles'%}article{%endif%}{%if category == 'Learning Summary'%}learning-summary{%endif%}{%if category == 'Experience Sharing'%}experience-sharing{%endif%}{%if category == 'Geeky Recording'%}geeky-recording{%endif%}{%if category == 'Miscellaneous Mood'%}miscellaneous-mood{%endif%}{%if category == 'Art Review'%}art-review{%endif%}?pg={{ total_page }}" style="padding:0;">Last</a></li>
+      </ul>
+    </div>
+  </nav>
+  </div>
+  {% endblock content %}

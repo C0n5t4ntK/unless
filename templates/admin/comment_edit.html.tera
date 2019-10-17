@@ -1,0 +1,130 @@
+{% extends "admin/base" %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="/admin/lib/sweetalert2/sweetalert2.min.css">
+{% endblock extra_css %}
+
+{% block content %}
+{% if comment %}
+<div class="container-fluid">
+	<div class="row">
+	    <div class="col-lg-12">
+	        <div class="box dark">
+	            <header>
+	                <h3>Writing Space</h3>
+	            </header>
+	            <div id="div-1" class="body">
+	                <form class="form-horizontal">
+	                    <div class="form-group">
+	                        <label for="autosize" class="control-label col-lg-4">Slug Url</label>
+	                        <div class="col-lg-8">
+	                            <textarea id="slug_url" class="form-control"
+	                                placeholder="Slug Url">{{comment.slug_url}}</textarea>
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="autosize" class="control-label col-lg-4">Content</label>
+	                        <div class="col-lg-8">
+	                            <textarea id="comment_content" class="form-control"
+	                                placeholder="Content">{{comment.content}}</textarea>
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label class="control-label col-lg-4">Status</label>
+	                        <div class="col-lg-4">
+	                            <div class="checkbox">
+	                                <label>
+	                                    <input id="publish" class="uniform" type="checkbox" value="true"
+	                                        {% if comment.published %}checked{% endif %}>Publish
+	                                </label>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="autosize" class="control-label col-lg-4">Reply Content</label>
+	                        <div class="col-lg-8">
+	                            <textarea id="reply_content" class="form-control"
+	                                placeholder="Reply Content">{{comment.reply_content}}</textarea>
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label for="text2" class="control-label col-lg-7"></label>
+	                        <div class="col-lg-5">
+	                            <button id="cancel" class="btn btn-default btn-grad">Cancel</button>
+	                            <button id="update" class="btn btn-primary btn-grad">Update</button>
+	                        </div>
+	                    </div>
+	                    <input id="comment_id" type="hidden" name="comment_id" value="{{comment.id}}">
+	                    <input id="user_id" type="hidden" name="user_id" value="{{comment.user_id}}">
+	                    <input id="create_time" type="hidden" name="create_time" value="{{comment.create_time}}">
+	                </form>
+	            </div>
+	        </div>
+	    </div>
+	    <!--END TEXT INPUT FIELD-->
+	</div>
+</div>
+{% else %}
+<h1 align="center">404</h1>
+{% endif %}
+{% endblock content %}
+
+{% block extra_js %}
+<script src="/admin/lib/autosize/jquery.autosize.min.js"></script>
+<script src="/admin/lib/sweetalert2/sweetalert2.min.js"></script>
+
+<script type="text/javascript">
+	$('#update')
+		.on('click', function(event) {
+			event.preventDefault();
+			var data = {
+				id: parseInt($('#comment_id').val()),
+				user_id: parseInt($('#user_id').val()),
+				create_time: $('#create_time').val(),
+				slug_url: $('#slug_url').val(),
+				content: $('#comment_content').val(),
+				reply_content: $('#reply_content').val(),
+				published: ($('#publish').is(":checked")) ? true : false,
+			};
+			$.ajax({
+				url: '/api/comment-put/update',
+				type: "PUT",
+				contentType: "application/json; charset=utf-8",
+				data: JSON.stringify(data),
+				success: function(data, result) {
+					if (data == "SUCCESS") {
+						swal({
+							title: 'Result',
+							text: 'Update Comment Successfully!',
+							type: 'success',
+						})
+							.then(function() {
+								window.location.href = "/admin/comment-list";
+							})
+					} else if (data == "ERROR") {
+						swal({
+							title: 'Result',
+							text: 'Update Comment Failed!',
+							type: 'error',
+						})
+					} else {
+						swal({
+							title: 'Result',
+							text: 'Update Comment Failed!',
+							type: 'error',
+						})
+					}
+				},
+				error: function(xhr, resp, text) {
+					console.log(xhr, resp, text);
+					alert("Update Comment Error");
+				}
+			})
+		});
+	$('#cancel')
+		.on('click', function(event) {
+			event.preventDefault();
+			window.location.href = "/admin/comment-list"
+		})
+</script>
+{% endblock extra_js %}

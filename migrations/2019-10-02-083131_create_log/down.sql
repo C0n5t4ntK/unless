@@ -1,0 +1,1 @@
+DROP TABLE visitor_log;

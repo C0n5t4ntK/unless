@@ -1,0 +1,43 @@
+{% extends "base" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block page_header %}
+  <header class="masthead" style="background-image: url('/img/profile.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{% if profile %}{{ profile.username }}{% else %}Oh No User{% endif %}</h1>
+            <h2 class="subheading">Here's his/her profile</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock page_header %}
+
+{% block content %}
+  <article>
+    <div class="container">
+      <div class="row">
+      {% if profile %}
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <p><h1>{% if profile %}{{ profile.username }}{% else %}No User{% endif %}</h1></p>
+            <p><h3 class="subheading">{% if profile.personal_site %}Personal Site: {{ profile.personal_site }} {% endif %}</h3></p>
+            <p><span class="meta">{% if profile %} Singup on {{ profile.create_time | truncate(length=10, end="") | replace(from="...", to="")}} {% endif %}</span></p>
+            <p><span class="meta">
+              {% if profile.hobby %} Hobby: {{profile.hobby}} {% endif %}
+            </span></p>
+            <p><span class="meta">
+              {% if profile.hometown %} Hometown: {{profile.hometown}} {% endif %}
+            </span></p>
+        </div>
+      {% else %}
+      Oh sorry, I can't find what you need...
+      {% endif %}
+      </div>
+    </div>
+  </article>
+{% endblock content %}

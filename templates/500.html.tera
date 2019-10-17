@@ -1,0 +1,26 @@
+{% extends "base" %}
+
+{% block title %} 500 {% endblock title %}
+
+{% block page_header %}
+  <header class="masthead" style="background-image: url('/img/500.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>500</h1>
+            <h2 class="subheading">So sorry, I don't feel so good...</h2>
+            <h2 class="subheading">It's so kind of you to leave me a message about this bug!</h2>
+            <span class="meta">I'll to fix this problem later...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock page_header %}
+
+{% block content %}
+  <center><h3>Why not see something else~</h3></center>
+  <hr />
+{% endblock content %}

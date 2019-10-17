@@ -1,0 +1,8 @@
+{% extends "admin/base" %}
+
+{% block content %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+<div><h1 style="text-align: center;">Keep writing something.</h1></div>
+</div>
+{% endblock content %}

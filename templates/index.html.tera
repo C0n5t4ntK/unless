@@ -1,0 +1,48 @@
+{% extends "base" %}
+
+{% block title %} Home {% endblock title %}
+
+{% block page_header %}
+  <header class="masthead" style="background-image: url('/img/index.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>C0n5t4ntK's Blog</h1>
+            <span class="subheading">A peaceful place on the earth</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock page_header %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% for article in articles %}
+        <div class="post-preview">
+          <a href="/article/{{ article.slug_url }}">
+            <h2 class="post-title">
+              {{ article.title }}
+            </h2>
+            <h3 class="post-subtitle">
+              {{ article.subtitle}}
+            </h3>
+          </a>
+          <p class="post-meta">
+            Created on {{ article.create_time | truncate(length=10, end="") | replace(from="...", to="")}} | Category: {{article.category}} | Tag: {{article.tag}}
+          </p>
+        </div>
+        {% endfor %}
+        {% if have_more %}
+        <div class="clearfix">
+          <a class="btn btn-primary float-right" href="/article?pg=1" style="background: #3249FF; border-radius: 2rem">More Articles &rarr;</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

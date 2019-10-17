@@ -1,0 +1,48 @@
+{% extends "base" %}
+
+{% block title %} {% if article %} {{ article.title }} {% else %} 404 {% endif %} {% endblock title %}
+
+{% block page_header %}
+  <header class="masthead" style="background-image: url('/img/about.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{% if article %}{{ article.title }}{%else%}404{% endif %}</h1>
+            <h2 class="subheading">{% if article %} {{ article.subtitle }} {% endif %}</h2>
+            <span class="meta">{% if article %} Created on {{ article.create_time | truncate(length=10, end="") | replace(from="...", to="")}} {% endif %}</span>
+            <span class="meta">{% if article %} Latest Update on {{ article.modify_time | truncate(length=10, end="") | replace(from="...", to="")}} {% endif %}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock page_header %}
+
+{% block content %}
+  <article>
+    <div class="container">
+      {% if article %}
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link {%if article.article_type == 'About'%}active{%endif%}" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {%if article.article_type == 'Friend'%}active{%endif%}" href="/friend">Friend</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {%if article.article_type == 'Board'%}active{%endif%}" href="/board">Board</a>
+        </li>
+      </ul>
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          {{ article.rendered_content | safe }}
+        </div>
+      </div>
+      {% else %}
+      Oh sorry, I can't find what you need...
+      {% endif %}
+    </div>
+  </article>
+{% endblock content %}

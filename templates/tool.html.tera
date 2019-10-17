@@ -1,0 +1,103 @@
+{% extends "base" %}
+
+{% block title %} Tool {% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="/admin/lib/sweetalert2/sweetalert2.min.css">
+{% endblock extra_css %}
+
+{% block page_header %}
+  <header class="masthead" style="background-image: url('/img/tool.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>Tool</h1>
+            <h2 class="subheading">You can use these tools to work easily</h2>
+            <span class="meta">I'll keep developing more useful tools~</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock page_header %}
+
+{% block content %}
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h3>Pastebin</h3>
+          <p>It's a useful tool which can easily share your text to others by short links.</p>
+          <p>What you uploaded may be seen by anyone, so please don't paste stuff like your password or something.</p>
+          <p>Your link will exist for a month, and the size limit is 1MB.</p>
+          <form class="form-horizontal">
+            <div class="form-group">
+                <label for="autosize" class="control-label col-lg-4">Paste</label>
+                <div class="col-lg-12">
+                    <textarea id="paste" class="form-control" placeholder="Paste whatever you want~"></textarea>
+                </div>
+            </div>
+          </form>
+          <label for="autosize" class="control-label col-lg-5">Press to create a link</label>
+          <label for="autosize" class="control-label col-lg-3">&rarr;</label>
+          <label id="create_paste" class="control-label col-lg-2">Create</label>
+        </div>
+      </div>
+    </div>
+  </article>
+{% endblock content %}
+
+{% block extra_js %}
+<script src="/admin/lib/autosize/jquery.autosize.min.js"></script>
+<script src="/admin/lib/sweetalert2/sweetalert2.min.js"></script>
+<script type="text/javascript">
+  $('#create_paste')
+    .on('click', function(event) {
+      event.preventDefault();
+      var date = new Date();
+      if ($('#paste').val() == '') {
+        swal({
+          title: 'Oh No',
+          text: 'Please Paste Something First~',
+          type: 'error',
+        });
+        return;
+      }
+      var data = {
+        user_id: {{user.id}},
+        create_time: date.toLocaleString(),
+        content: $('#paste').val(),
+      };
+      $.ajax({
+        url: '/tool/pastebin/new',
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function(data) {
+          if (data) {
+            swal({
+              title: 'Your Link',
+              text: data,
+              type: 'success',
+            })
+            .then(function(){
+              document.getElementById('paste').value = '';
+            })
+          }  else {
+            swal({
+              title: 'Error',
+              text: 'Create Link Failed!',
+              type: 'error',
+            })
+          }
+        },
+        error: function(xhr, resp, text) {
+          console.log(xhr, resp, text);
+          alert("Create Link Error!");
+        }
+      })
+    });
+</script>
+{% endblock extra_js %}

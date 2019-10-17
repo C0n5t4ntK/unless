@@ -1,0 +1,129 @@
+{% extends "admin/base" %}
+
+{% block extra_css %}
+  <link href="/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/admin/lib/sweetalert2/sweetalert2.min.css">
+{% endblock extra_css %}
+
+{% block content %}
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">All Users</h1>
+          <hr/>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4" style="height:500px; overflow-y:scroll;">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Number</th>
+                      <th>User Id</th>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Personal Site</th>
+                      <th>Hobby</th>
+                      <th>Create Time</th>
+                      <th>Access Time</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Number</th>
+                      <th>User Id</th>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Personal Site</th>
+                      <th>Hobby</th>
+                      <th>Create Time</th>
+                      <th>Access Time</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    {% for user in users %}
+                    <tr>
+                      <td>{{loop.index}}</td>
+                      <td>{{user.id}}</td>
+                      <td>{{user.username}}</td>
+                      <td>{{user.email}}</td>
+                      <td>{{user.personal_site}}</td>
+                      <td>{{user.hobby}}</td>
+                      <td>{{user.create_time}}</td>
+                      <td>{{user.modify_time}}</td>
+                      <td align="center">
+                        <a class="btn btn-info btn-circle btn-lg" href="/admin/user-edit/{{user.id}}">
+                          <i class="fas fa-info-circle"></i>
+                        </a>
+                      </td>
+                      <td align="center">
+                        <a class="btn btn-danger btn-circle btn-lg" onclick="delete_user({{user.id}})">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+{% endblock content %}
+
+{% block extra_js %}
+  <script src="/admin/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="/admin/lib/sweetalert2/sweetalert2.min.js"></script>
+  <script>
+    function delete_user(id) {
+      swal({
+        title: 'Are you sure?',
+        text: "You won't be able to undo this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3086d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      })
+        .then(function() {
+          $.ajax({
+            url: '/api/user-delete/' + id,
+            type: 'DELETE',
+            success: function (data, result) {
+              if (data == "SUCCESS") {
+                swal({
+                  title: 'Result',
+                  text: "Delete User Successfully",
+                  type: 'success',
+                })
+                  .then(function() {
+                    location.reload();
+                  }, function() {})
+              } else if (data == "ERROR") {
+                swal({
+                  title: 'Result',
+                  text: "Delete User Failed!",
+                  type: 'error'
+                  })
+              } else {
+                swal({
+                  title: 'Result',
+                  text: "Delete User Failed!",
+                  type: 'error'
+                  })
+              }
+            }
+          });
+        })
+    }
+  </script>
+{% endblock extra_js %}

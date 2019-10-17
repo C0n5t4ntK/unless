@@ -1,0 +1,64 @@
+{% extends "base" %}
+
+{% block title %} Jottings {% endblock title %}
+
+{% block extra_css %}
+<style type="text/css">
+.paginations a {
+  padding: 1rem, 1rem;
+  margin: 0 6px;
+  font-size: 1.5rem;
+  color: #555;
+  border: none;
+  text-align: center;
+  background: transparent;
+}
+</style>
+{% endblock extra_css %}
+
+{% block page_header %}
+  <header class="masthead" style="background-image: url('/img/jotting.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Jottings</h1>
+            <span class="subheading"><h2>Enjoy Life</h2></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock page_header %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% for jotting in jottings %}
+        <div class="post-preview">
+            <h4 class="post-subtitle" style="font-weight: normal; font-style: italic;">
+              {{ jotting.weather }} | {{ jotting.mood }}
+            </h4>
+            <p>{{ jotting.content }}</p>
+          <p class="post-meta">
+            Created on {{ jotting.create_time | truncate(length=10, end="") | replace(from="...", to="")}}
+          </p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <nav style="text-align: center;">
+    <div class="row">
+      <ul class="pagination col-lg-12 col-md-12 col-12" style="padding:0;">
+        <li class="page-item paginations col-lg-3 col-md-3 col-3 mx-auto"><a class="page-link" href="/jotting?pg=1" style="padding:0;">First</a></li>
+        <li class="page-item paginations col-lg-2 col-md-2 col-2 mx-auto">{% if pg != 1 %}<a class="page-link" href="/jotting?pg={{ pg - 1 }}" style="padding:0;">&larr;</a>{% else %}&larr;{% endif %}</li>
+        <li class="page-item paginations col-lg-2 col-md-2 col-2 mx-auto"><a class="page-link" href="/jotting?pg={{ pg }}" style="padding:0;">{{ pg }}</a></li>
+        <li class="page-item paginations col-lg-2 col-md-2 col-2 mx-auto">{% if pg != total_page %}<a class="page-link" href="/jotting?pg={{ pg + 1 }}" style="padding:0;">&rarr;</a>{% else %}&rarr;{% endif %}</li>
+        <li class="page-item paginations col-lg-3 col-md-3 col-3 mx-auto"><a class="page-link" href="/jotting?pg={{ total_page }}" style="padding:0;">Last</a></li>
+      </ul>
+    </div>
+  </nav>
+  </div>
+  {% endblock content %}
