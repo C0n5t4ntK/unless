@@ -105,6 +105,7 @@
 
 {% block extra_js %}
 <script src="/admin/lib/autosize/jquery.autosize.min.js"></script>
+<script src="/admin/lib/highlight.min.js"></script>
 <script src="/admin/lib/sweetalert2/sweetalert2.min.js"></script>
 <script type="text/javascript">
   $('#thumb_up')

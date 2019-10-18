@@ -107,6 +107,8 @@ pub fn board_upage(db: DB, ip: Ip, user: User) -> Template {
 		Article::change_page_view(db.conn(), article.id, page_view + 1);
 		context.insert("article", article);
 	}
+	let comments = Comment::query_by_slug_url(db.conn(), "board");
+	context.insert("comments", &comments);
 	Template::render("about", &context)
 }
 
@@ -120,6 +122,8 @@ pub fn board_page(db: DB, ip: Ip) -> Template {
 		Article::change_page_view(db.conn(), article.id, page_view + 1);
 		context.insert("article", article);
 	}
+	let comments = Comment::query_by_slug_url(db.conn(), "board");
+	context.insert("comments", &comments);
 	Template::render("about", &context)
 }
 
