@@ -84,7 +84,7 @@
           <div class="col-lg-8 col-md-10 mx-auto">
             {% if user %}
             <p class="text-muted" style="text-align: center;">Happy to see you, <a href="/tool"><label title="Press to use tools for you~">{{user.username}}!</label></a></p>
-            <p class="text-muted" style="text-align: center;">Last login at {{access_time}}!</p>
+            <p class="text-muted" style="text-align: center;">Last active at {{access_time}}!</p>
             <hr>
             {% endif %}
             <ul class="list-inline text-center">

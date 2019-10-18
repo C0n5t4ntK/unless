@@ -32,7 +32,7 @@ pub fn admin_context(db: &DB, user: Admin) -> Context {
 		context.insert("username", &user.username);
 	}
 	// insert the last login time
-	if let Some(log) = visitor_logs.first() {
+	if let Some(log) = visitor_logs.get(1) {
 		context.insert("access_time", &log.access_time);
 	}
 	context
@@ -50,8 +50,7 @@ pub fn user_context(db: &DB, user: User) -> Context {
 		context.insert("user", &user);
 	}
 	// insert the last login time
-	// get("2") because (1) is login page's record and (0) is the return page's record
-	if let Some(log) = visitor_logs.get(2) {
+	if let Some(log) = visitor_logs.get(1) {
 		context.insert("access_time", &log.access_time);
 	}
 	context.insert("email", &email_url);

@@ -10,7 +10,6 @@ use dal::diesel_pool::DB;
 use dal::models::user::*;
 //use util::time::get_now;
 use util::auth::Admin;
-use util::log::log_to_db;
 use util::log::Ip;
 use util::response::ResponseEnum;
 
@@ -25,7 +24,7 @@ pub fn do_signup(db: DB, user_info: Json<UserInfo>) -> Json<ResponseEnum> {
 }
 
 #[post("/api/user-post/login", data = "<login>")]
-pub fn do_login(db: DB, mut cookies: Cookies, login: Json<Login>, ip: Ip) -> Json<ResponseEnum> {
+pub fn do_login(db: DB, mut cookies: Cookies, login: Json<Login>, _ip: Ip) -> Json<ResponseEnum> {
 	let users = User::query_by_email(db.conn(), &login.email);
 	if let Some(user) = users.first() {
 		match user.verify(&login.password) {
@@ -33,7 +32,6 @@ pub fn do_login(db: DB, mut cookies: Cookies, login: Json<Login>, ip: Ip) -> Jso
 				if valid {
 					cookies.add_private(Cookie::new("user_id", user.id.to_string()));
 					cookies.add_private(Cookie::new("username", user.username.to_string()));
-					log_to_db(&db, ip, user.id);
 					Json(ResponseEnum::SUCCESS)
 				} else {
 					Json(ResponseEnum::ERROR)

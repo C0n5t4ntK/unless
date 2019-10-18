@@ -137,7 +137,7 @@ fn rocket() -> rocket::Rocket {
 			]
 		)
 		.attach(Template::fairing())
-		.register(catchers![error::not_found, error::unauthorised])//, error::internal_error])
+		.register(catchers![error::not_found, error::unauthorised, error::internal_error])
 }
 
 fn setup_log() {
