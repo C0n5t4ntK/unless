@@ -14,7 +14,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4" style="height:500px; overflow-y:scroll;">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+              <h6 class="m-0 font-weight-bold text-primary">User List</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -28,7 +28,7 @@
                       <th>Personal Site</th>
                       <th>Hobby</th>
                       <th>Create Time</th>
-                      <th>Access Time</th>
+                      <th>Modify Time</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
@@ -42,7 +42,7 @@
                       <th>Personal Site</th>
                       <th>Hobby</th>
                       <th>Create Time</th>
-                      <th>Access Time</th>
+                      <th>Modify Time</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>

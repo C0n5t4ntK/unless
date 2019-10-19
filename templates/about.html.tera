@@ -42,7 +42,7 @@
           <a class="nav-link {%if article.article_type == 'Board'%}active{%endif%}" href="/board">Board</a>
         </li>
       </ul>
-      <div class="row">
+      <div class="row" style="padding: 1rem 0rem;">
         <div class="col-lg-8 col-md-10 mx-auto">
           {{ article.rendered_content | safe }}
 

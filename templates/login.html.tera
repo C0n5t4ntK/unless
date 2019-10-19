@@ -40,9 +40,9 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Welcome <a href="/">Back</a>!</h1>
                   </div>
-                  <form class="user">
+                  <form class="user" id="user">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="InputEmail" aria-describedby="emailHelp" placeholder="Email Address...">
+                      <input type="email" class="form-control form-control-user" id="InputEmail" aria-describedby="emailHelp" placeholder="Email Address..." autofocus>
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="InputPassword" placeholder="Password...">
@@ -53,7 +53,7 @@
                         <label class="custom-control-label" for="customCheck">Remember Me</label>
                       </div>
                     </div> -->
-                    <a href="index" class="btn btn-primary btn-user btn-block" id="login-submit">
+                    <a href="/" class="btn btn-primary btn-user btn-block" id="login-submit" onclick="loginSubmit(event)">
                       Login
                     </a>
 <!--                     <hr>
@@ -94,45 +94,51 @@
   <script src="/admin/js/sb-admin-2.min.js"></script>
   <script src="/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
   <script src="/admin/lib/sweetalert2/sweetalert2.min.js"></script>
-
   <script type="text/javascript">
-    $('#login-submit')
-      .on('click', function (event) {
-        event.preventDefault();
-        var data = {
-          email: $('#InputEmail')
-            .val(),
-          password: $('#InputPassword')
-            .val(),
-        };
-        $.ajax({
-          url: '/api/user-post/login',
-          type: "POST",
-          contentType: "application/json; charset=utf-8",
-          data: JSON.stringify(data),
-          success: function (data, result) {
-            if (data == "SUCCESS") {
-              window.location.href = "javascript:self.location=document.referrer;";
-            } else if (data == "FAILURE") {
-              swal(
-                'Error',
-                'Login Failed! Leave Me A Message If You Forget.',
-                'error'
-              )
-            } else {
-              swal(
-                'Error',
-                'Login Failed! Leave Me A Message If You Forget.',
-                'error'
-              )
-            }
-          },
-          error: function (xhr, resp, text) {
-            console.log(xht, resp, text);
-            alert("Login Error");
+    var user = document.getElementById('user');
+    user.addEventListener('keyup', function(e) {
+      if(e.keyCode == '13') {
+        loginSubmit(event);
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    function loginSubmit(event) {
+      event.preventDefault();
+      var data = {
+        email: $('#InputEmail')
+          .val(),
+        password: $('#InputPassword')
+          .val(),
+      };
+      $.ajax({
+        url: '/api/user-post/login',
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(data),
+        success: function (data, result) {
+          if (data == "SUCCESS") {
+            window.location.href = "javascript:self.location=document.referrer;";
+          } else if (data == "FAILURE") {
+            swal(
+              'Error',
+              'Login Failed! Leave Me A Message If You Forget.',
+              'error'
+            )
+          } else {
+            swal(
+              'Error',
+              'Login Failed! Leave Me A Message If You Forget.',
+              'error'
+            )
           }
-        })
-      });
+        },
+        error: function (xhr, resp, text) {
+          console.log(xht, resp, text);
+          alert("Login Error");
+        }
+      })
+    };
   </script>
 
 </body>
