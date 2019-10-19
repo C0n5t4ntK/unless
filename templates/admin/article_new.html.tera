@@ -112,7 +112,6 @@
 {% block extra_js %}
 <script src="/admin/lib/autosize/jquery.autosize.min.js"></script>
 <script src="/admin/js/simplemde.min.js"></script>
-<script src="/admin/lib/markdown-it.min.js"></script>
 <script src="/admin/lib/highlight.min.js"></script>
 <script src="/admin/lib/sweetalert2/sweetalert2.min.js"></script>
 <script type="text/javascript">
@@ -123,9 +122,7 @@
 		element: document.getElementById("editor")
 	});
 </script>
-
 <script type="text/javascript">
-	var md = window.markdownit();
 	$('#submit')
 		.on('click', function(event) {
 			event.preventDefault();
@@ -139,7 +136,7 @@
 				published: ($('#publish').is(":checked")) ? true : false,
 				enabled_comment: ($('#enable_comment').is(":checked")) ? true : false,
 				raw_content: simplemde.value(),
-				rendered_content: md.render(simplemde.value()),
+				rendered_content: simplemde.markdown(simplemde.value()),
 			};
 			$.ajax({
 				url: '/api/article-post/new',

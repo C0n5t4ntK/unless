@@ -21,11 +21,6 @@ pub fn login_page() -> Template {
 }
 
 #[get("/signup")]
-pub fn signup_upage(_user: auth::User) -> Redirect {
-	Redirect::to("/")
-}
-
-#[get("/signup", rank = 2)]
 pub fn signup_page() -> Template {
 	let mut context = HashMap::new();
 	context.insert("welcome", "Welcome stranger~");

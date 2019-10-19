@@ -57,7 +57,7 @@
             </div>
             <div class="form-group">
                     <button id="thumb_up" class="btn btn-default btn-grad col-lg-2">
-                      ({{article.thumb_up}})
+                      (<span id="thumb_up_value">{{article.thumb_up}}</span>)
                       <span class="fa-stack fa-lg">
                       <i class="fas fa-circle fa-stack-2x"></i>
                       <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
@@ -134,7 +134,7 @@
               type: 'success',
             })
               .then(function() {
-                history.go(0);
+                document.getElementById("thumb_up_value").innerHTML = parseInt(document.getElementById("thumb_up_value").innerHTML) + 1;
               })
           } else if (data == "ERROR") {
             swal({

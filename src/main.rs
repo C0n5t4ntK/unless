@@ -79,7 +79,6 @@ fn rocket() -> rocket::Rocket {
 				user::login_page,
 				user::login_upage,
 				user::signup_page,
-				user::signup_upage,
 				user::profile_upage,
 				tool::tool_upage,
 				tool::do_get_ip,
