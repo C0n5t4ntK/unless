@@ -32,7 +32,7 @@
                       <th>Published</th>
                       <th>Create Time</th>
                       <th>Modify Time</th>
-                      <th>Enabledcomment</th>
+                      <th>Enabled Comment</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
@@ -50,7 +50,7 @@
                       <th>Published</th>
                       <th>Create Time</th>
                       <th>Modify Time</th>
-                      <th>Enabledcomment</th>
+                      <th>Enabled Comment</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
