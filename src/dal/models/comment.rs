@@ -13,7 +13,7 @@ use util::time::get_now;
 pub struct Comment {
 	pub id: i32,
 	pub user_id: i32,
-	pub slug_url: String,
+	pub article_id: i32,
 	pub content: String,
 	pub reply_content: Option<String>,
 	pub create_time: NaiveDateTime,
@@ -47,11 +47,11 @@ impl Comment {
 	// }
 
 	// main func to use
-	pub fn query_by_slug_url(conn: &PgConnection, slug_url: &str) -> Vec<Comment> {
+	pub fn query_by_article_id(conn: &PgConnection, article_id: i32) -> Vec<Comment> {
 		Comment::published()
-			.filter(comment::slug_url.eq(slug_url))
+			.filter(comment::article_id.eq(article_id))
 			.load::<Comment>(conn)
-			.expect("Error finding comment by slug_url!")
+			.expect("Error finding comment by article_id!")
 	}
 
 	pub fn delete_by_id(conn: &PgConnection, id: i32) -> bool {
@@ -67,10 +67,11 @@ impl Comment {
 #[table_name = "comment"]
 pub struct NewComment {
 	pub user_id: i32,
-	pub slug_url: String,
+	pub article_id: i32,
 	pub content: String,
 	#[serde(default = "get_now")]
 	pub create_time: NaiveDateTime,
+	pub published: bool,
 }
 
 impl NewComment {

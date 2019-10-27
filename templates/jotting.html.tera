@@ -43,7 +43,7 @@
             </h4>
             <p>{{ jotting.content }}</p>
           <p class="post-meta">
-            Created on {{ jotting.create_time | truncate(length=10, end="") | replace(from="...", to="")}}
+            Created on {{ jotting.create_time | replace(from="T", to=" ") }}
           </p>
         </div>
         {% endfor %}

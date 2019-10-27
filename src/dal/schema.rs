@@ -22,7 +22,7 @@ table! {
     comment (id) {
         id -> Int4,
         user_id -> Int4,
-        slug_url -> Varchar,
+        article_id -> Int4,
         content -> Text,
         reply_content -> Nullable<Text>,
         create_time -> Timestamp,
@@ -48,6 +48,7 @@ table! {
         hashed_password -> Varchar,
         create_time -> Timestamp,
         modify_time -> Timestamp,
+        starred -> Bool,
         email -> Varchar,
         personal_site -> Nullable<Varchar>,
         hobby -> Nullable<Varchar>,

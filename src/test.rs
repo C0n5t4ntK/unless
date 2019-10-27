@@ -15,6 +15,7 @@ fn hash_password_test() {
 		hashed_password: result.clone(),
 		create_time: get_now(),
 		modify_time: get_now(),
+		starred: false,
 		email: String::from("elapselife@outlook.com"),
 		personal_site: String::from("www.elapse.life"),
 		hobby: String::from("video games, basketball, programming"),

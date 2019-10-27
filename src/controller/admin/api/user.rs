@@ -10,13 +10,19 @@ use dal::diesel_pool::DB;
 use dal::models::user::*;
 //use util::time::get_now;
 use util::auth::Admin;
-use util::log::Ip;
+use util::log::{log_to_db, Ip};
 use util::response::ResponseEnum;
 
 #[post("/api/user-post/signup", data = "<user_info>")]
-pub fn do_signup(db: DB, user_info: Json<UserInfo>) -> Json<ResponseEnum> {
+pub fn do_signup(db: DB, mut cookies: Cookies, user_info: Json<UserInfo>, ip: Ip) -> Json<ResponseEnum> {
 	let new_user = UserInfo::convert_to_new_user(&user_info.0);
 	if NewUser::insert(db.conn(), &new_user) {
+		let users = User::query_by_email(db.conn(), &user_info.0.email);
+		if let Some(user) = users.first() {
+		cookies.add_private(Cookie::new("user_id", user.id.to_string()));
+		cookies.add_private(Cookie::new("username", user.username.to_string()));
+		log_to_db(&db, ip, user.id);
+		}
 		Json(ResponseEnum::SUCCESS)
 	} else {
 		Json(ResponseEnum::ERROR)

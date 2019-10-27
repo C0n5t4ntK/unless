@@ -163,8 +163,9 @@
       }
       var data = {
         user_id: parseInt('{{user.id}}'),
-        slug_url: '{{article.slug_url}}',
+        article_id: parseInt('{{article.id}}'),
         content: $('#comment').val(),
+        published: {% if user.starred %}true{% else %}false{% endif %},
       };
       $.ajax({
         url: '/api/comment-post/new',
@@ -174,12 +175,16 @@
         success: function(data, result) {
           if (data == "SUCCESS") {
             swal({
-              title: 'Thanks a lot',
-              text: 'Your Comment Will Be Shown Later~',
+              title: 'Thanks A Lot',
+              text: '{% if user.starred %}Thanks For Comment~{% else %}Your Comment Will Be Shown Later~{% endif %}',
               type: 'success',
             })
             .then(function(){
+              {% if user.starred %}
+              history.go(0);
+              {% else %}
               document.getElementById('comment').value = '';
+              {% endif %}
             })
           } else if (data == "ERROR") {
             swal({

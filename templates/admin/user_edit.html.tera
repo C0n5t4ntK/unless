@@ -58,6 +58,16 @@
 	                        </div>
 	                    </div>
 	                    <div class="form-group">
+	                        <div class="col-lg-4">
+	                            <div class="checkbox">
+	                                <label>
+	                                    <input id="starred" class="uniform" type="checkbox" value="true"
+	                                        {% if user.starred %}checked{% endif %}>Starred
+	                                </label>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
 	                        <label for="text2" class="control-label col-lg-7"></label>
 	                        <div class="col-lg-5">
 	                            <button id="cancel" class="btn btn-default btn-grad">Cancel</button>
@@ -91,6 +101,7 @@
 				create_time: $('#create_time').val(),
 				username: $('#username').val(),
 				hashed_password: $('#hashed_password').val(),
+				starred: ($('#starred').is(":checked")) ? true : false,
 				email: $('#email').val(),
 				personal_site: $('#personal_site').val(),
 				hobby: $('#hobby').val(),

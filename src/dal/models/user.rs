@@ -19,6 +19,7 @@ pub struct User {
 	pub create_time: NaiveDateTime,
 	#[serde(default = "get_now")]
 	pub modify_time: NaiveDateTime,
+	pub starred: bool,
 	pub email: String,
 	pub personal_site: Option<String>,
 	pub hobby: Option<String>,
@@ -59,6 +60,10 @@ impl User {
 		diesel::update(user).set(user).execute(conn).is_ok()
 	}
 
+	pub fn set_starred(conn: &PgConnection, id: i32) -> bool {
+		diesel::update(all_users.find(id)).set(user::starred.eq(true)).execute(conn).is_ok()
+	}
+
 	// pub fn change_password(conn: &PgConnection, 
 	// 					   id: i32,
 	// 					   new_raw_password: &str,
@@ -81,6 +86,7 @@ pub struct NewUser {
 	pub create_time: NaiveDateTime,
 	#[serde(default = "get_now")]
 	pub modify_time: NaiveDateTime,
+	pub starred: bool,
 	pub email: String,
 	pub personal_site: String,
 	pub hobby: String,
@@ -114,6 +120,7 @@ impl UserInfo {
 			hashed_password: hashed_password,
 			create_time: get_now(),
 			modify_time: get_now(),
+			starred: false,
 			email: user_info.email.to_string(),
 			personal_site: user_info.personal_site.to_string(),
 			hobby: user_info.hobby.to_string(),

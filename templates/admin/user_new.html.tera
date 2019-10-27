@@ -143,22 +143,22 @@
             if (data == "SUCCESS") {
               swal({
                 title: 'Success',
-                text: 'Let\'s login!',
+                text: 'Welcome To The New World!',
                 type: 'success',
               })
                 .then(function() {
-                  window.location.href = "/login";
+                  window.location.href = "/";
                 })
             } else if (data == "ERROR") {
               swal({
                 title: 'Error',
-                text: 'Register failed!',
+                text: 'Register Failed!',
                 type: 'error',
               })
             } else {
               swal({
                 title: 'Error',
-                text: 'Register failed!',
+                text: 'Register Failed!',
                 type: 'error',
               })
             }

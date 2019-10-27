@@ -5,8 +5,7 @@ use dal::diesel_pool::{DB, ARTICLE_CACHE};
 use dal::models::article::*;
 use dal::models::comment::*;
 use util::auth::User;
-use util::log::log_to_db;
-use util::log::Ip;
+use util::log::{log_to_db, Ip};
 use util::response::{user_context, simple_context};
 
 const VISITOR: i32 = 0;
@@ -52,6 +51,8 @@ pub fn article_by_url_upage(db: DB, slug_url: String, ip: Ip, user: User) -> Tem
 			let page_view = article.page_view;
 			Article::change_page_view(db.conn(), article.id, page_view + 1);
 			context.insert("article", article);
+			let comments = Comment::query_by_article_id(db.conn(), article.id);
+			context.insert("comments", &comments);
 		}
 	} else {
 		let result = Article::query_by_slug_url(db.conn(), &slug_url);
@@ -60,10 +61,10 @@ pub fn article_by_url_upage(db: DB, slug_url: String, ip: Ip, user: User) -> Tem
 			Article::change_page_view(db.conn(), article.id, page_view + 1);
 			context.insert("article", article);
 			hashmap.insert(slug_url.clone(), article.clone());
+			let comments = Comment::query_by_article_id(db.conn(), article.id);
+			context.insert("comments", &comments);
 		}
 	}
-	let comments = Comment::query_by_slug_url(db.conn(), &slug_url);
-	context.insert("comments", &comments);
 	Template::render("article", &context)
 }
 
@@ -82,6 +83,8 @@ pub fn article_by_url_page(db: DB, slug_url: String, ip: Ip) -> Template {
 			let page_view = article.page_view;
 			Article::change_page_view(db.conn(), article.id, page_view + 1);
 			context.insert("article", article);
+			let comments = Comment::query_by_article_id(db.conn(), article.id);
+			context.insert("comments", &comments);
 		}
 	} else {
 		let result = Article::query_by_slug_url(db.conn(), &slug_url);
@@ -90,10 +93,10 @@ pub fn article_by_url_page(db: DB, slug_url: String, ip: Ip) -> Template {
 			Article::change_page_view(db.conn(), article.id, page_view + 1);
 			context.insert("article", article);
 			hashmap.insert(slug_url.clone(), article.clone());
+			let comments = Comment::query_by_article_id(db.conn(), article.id);
+			context.insert("comments", &comments);
 		}
 	}
-	let comments = Comment::query_by_slug_url(db.conn(), &slug_url);
-	context.insert("comments", &comments);
 	Template::render("article", &context)
 }
 
@@ -107,7 +110,7 @@ pub fn board_upage(db: DB, ip: Ip, user: User) -> Template {
 		Article::change_page_view(db.conn(), article.id, page_view + 1);
 		context.insert("article", article);
 	}
-	let comments = Comment::query_by_slug_url(db.conn(), "board");
+	let comments = Comment::query_by_article_id(db.conn(), 3);
 	context.insert("comments", &comments);
 	Template::render("about", &context)
 }
@@ -122,7 +125,7 @@ pub fn board_page(db: DB, ip: Ip) -> Template {
 		Article::change_page_view(db.conn(), article.id, page_view + 1);
 		context.insert("article", article);
 	}
-	let comments = Comment::query_by_slug_url(db.conn(), "board");
+	let comments = Comment::query_by_article_id(db.conn(), 3);
 	context.insert("comments", &comments);
 	Template::render("about", &context)
 }
