@@ -16,13 +16,6 @@
 	            <div id="div-1" class="body">
 	                <form class="form-horizontal">
 	                    <div class="form-group">
-	                        <label for="autosize" class="control-label col-lg-4">Slug Url</label>
-	                        <div class="col-lg-8">
-	                            <textarea id="slug_url" class="form-control"
-	                                placeholder="Slug Url">{{comment.slug_url}}</textarea>
-	                        </div>
-	                    </div>
-	                    <div class="form-group">
 	                        <label for="autosize" class="control-label col-lg-4">Content</label>
 	                        <div class="col-lg-8">
 	                            <textarea id="comment_content" class="form-control"
@@ -56,6 +49,7 @@
 	                    </div>
 	                    <input id="comment_id" type="hidden" name="comment_id" value="{{comment.id}}">
 	                    <input id="user_id" type="hidden" name="user_id" value="{{comment.user_id}}">
+	                    <input id="article_id" type="hidden" name="article_id" value="{{comment.article_id}}">
 	                    <input id="create_time" type="hidden" name="create_time" value="{{comment.create_time}}">
 	                </form>
 	            </div>
@@ -80,8 +74,8 @@
 			var data = {
 				id: parseInt($('#comment_id').val()),
 				user_id: parseInt($('#user_id').val()),
+				article_id: parseInt($('#article_id').val()),
 				create_time: $('#create_time').val(),
-				slug_url: $('#slug_url').val(),
 				content: $('#comment_content').val(),
 				reply_content: $('#reply_content').val(),
 				published: ($('#publish').is(":checked")) ? true : false,

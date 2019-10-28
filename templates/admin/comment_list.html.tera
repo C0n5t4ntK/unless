@@ -23,7 +23,7 @@
                     <tr>
                       <th>Number</th>
                       <th>User ID</th>
-                      <th>Slug Url</th>
+                      <th>Article ID</th>
                       <th>Content</th>
                       <th>Reply Content</th>
                       <th>Create Time</th>
@@ -36,7 +36,7 @@
                     <tr>
                       <th>Number</th>
                       <th>User ID</th>
-                      <th>Slug Url</th>
+                      <th>Article ID</th>
                       <th>Content</th>
                       <th>Reply Content</th>
                       <th>Create Time</th>
@@ -50,7 +50,7 @@
                     <tr>
                       <td>{{loop.index}}</td>
                       <td>{{comment.user_id}}</td>
-                      <td>{{comment.slug_url}}</td>
+                      <td>{{comment.article_id}}</td>
                       <td>{{comment.content}}</td>
                       <td>{{comment.reply_content}}</td>
                       <td>{{comment.create_time}}</td>

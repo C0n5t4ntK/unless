@@ -18,7 +18,7 @@ slug_url varchar UNIQUE NOT NULL
 
 CREATE OR REPLACE FUNCTION delete_comment_trigger() RETURNS TRIGGER AS $$
 BEGIN
-	DELETE FROM comment WHERE slug_url = OLD.slug_url;
+	DELETE FROM comment WHERE article_id = OLD.article_id;
 	RETURN OLD;
 END;
 $$
