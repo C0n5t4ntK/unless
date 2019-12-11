@@ -78,7 +78,7 @@
   <script src="/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
   <script src="/admin/lib/sweetalert2/sweetalert2.min.js"></script>
   <script src="/admin/js/datatables-demo.js"></script>
-    <script>
+  <script>
     function delete_jotting(id) {
       swal({
         title: 'Are you sure?',
