@@ -1,6 +1,6 @@
 use rocket_contrib::templates::Template;
 
-use dal::diesel_pool::{DB};
+use dal::diesel_pool::DB;
 use dal::models::article::*;
 use util::auth::Admin;
 use util::response::admin_context;
