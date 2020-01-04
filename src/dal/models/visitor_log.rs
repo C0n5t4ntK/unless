@@ -29,29 +29,29 @@ impl VisitorLog {
 	}
 
 	pub fn count_daily_page_view(conn: &PgConnection) -> Vec<(NaiveDateTime, i64)> {
-		sql::<(Timestamp, BigInt)>("SELECT date_trunc('day', access_time) ,
-			count(*) FROM visitor_log GROUP BY 1 ORDER BY 1 LIMIT 10;")
+		sql::<(Timestamp, BigInt)>("SELECT * FROM (SELECT date_trunc('day', access_time) ,
+			count(*) FROM visitor_log GROUP BY 1 ORDER BY 1 DESC LIMIT 10) a ORDER BY 1;")
 			.get_results(conn)
 			.expect("Error getting daily page view!")
 	}
 
 	pub fn count_daily_user_view(conn: &PgConnection) -> Vec<(NaiveDateTime, i64)> {
-		sql::<(Timestamp, BigInt)>("SELECT date_trunc('day', access_time) ,
-			count(DISTINCT(ip)) FROM visitor_log GROUP BY 1 ORDER BY 1 LIMIT 10;")
+		sql::<(Timestamp, BigInt)>("SELECT * FROM (SELECT date_trunc('day', access_time) ,
+			count(DISTINCT(ip)) FROM visitor_log GROUP BY 1 ORDER BY 1 DESC LIMIT 10) a ORDER BY 1;")
 			.get_results(conn)
 			.expect("Error getting daily user view!")
 	}
 
 	pub fn count_monthly_page_view(conn: &PgConnection) -> Vec<(NaiveDateTime, i64)> {
-		sql::<(Timestamp, BigInt)>("SELECT date_trunc('month', access_time) ,
-			count(*) FROM visitor_log GROUP BY 1 ORDER BY 1 LIMIT 5;")
+		sql::<(Timestamp, BigInt)>("SELECT * FROM (SELECT date_trunc('month', access_time) ,
+			count(*) FROM visitor_log GROUP BY 1 ORDER BY 1 DESC LIMIT 5) a ORDER BY 1;")
 			.get_results(conn)
 			.expect("Error getting monthly page view!")
 	}
 
 	pub fn count_monthly_user_view(conn: &PgConnection) -> Vec<(NaiveDateTime, i64)> {
-		sql::<(Timestamp, BigInt)>("SELECT date_trunc('month', access_time) ,
-			count(DISTINCT(ip)) FROM visitor_log GROUP BY 1 ORDER BY 1 LIMIT 5;")
+		sql::<(Timestamp, BigInt)>("SELECT * FROM (SELECT date_trunc('month', access_time) ,
+			count(DISTINCT(ip)) FROM visitor_log GROUP BY 1 ORDER BY 1 DESC LIMIT 5) a ORDER BY 1;")
 			.get_results(conn)
 			.expect("Error getting monthly user view!")
 	}

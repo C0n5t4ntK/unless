@@ -64,10 +64,10 @@
                       </span>
                     </button>
                     {% if user %}
-                    <label for="autosize" class="control-label col-lg-8">&larr; Please press if I helped~</label>
+                    <label for="autosize" class="control-label col-lg-8 d-none">&larr; Please press if I helped~</label>
                     <label id="submit" class="btn btn-default btn-grad col-lg-1">Submit</label>
                     {% else %}
-                    <label for="autosize" class="control-label col-lg-5">&larr; Please press if I helped~</label>
+                    <label for="autosize" class="control-label col-lg-5 d-none">&larr; Please press if I helped~</label>
                     <label class="btn btn-default btn-grad col-lg-4">Login to comment^_^</label>
                     {% endif %}
             </div>
