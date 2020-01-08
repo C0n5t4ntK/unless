@@ -20,7 +20,7 @@ Okay, enough chatting, let's see how it works!
 
 ***
 
-## Getting Start
+## Getting Started
 
 If you want to use or learn from this project, I'll see you as already learned Rust programing and installed Rust on your computer. If not, you can check [Start Rust](https://www.rust-lang.org/learn/get-started) to get some help.
 
