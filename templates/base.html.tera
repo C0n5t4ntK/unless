@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A personal blog to record life" />
     <meta name="author" content="C0n5t4ntK" />
-    <title>o(*￣▽￣*)ブHi~</title>
+    <title>{% block title %}{% endblock %}</title>
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -128,7 +128,7 @@
     {% block extra_js %}{% endblock extra_js %}
     <script type="text/javascript">
       document.addEventListener("visibilitychange", function(){
-        document.title = document.hidden ? "o(*≧▽≦)ツ┏━┓Ohhh~" : "{% block title %}{% endblock %}"
+        document.title = document.hidden ? "o(*≧▽≦)ツ┏━┓Ohhh~" : "Welcome Back~"
       });
     </script>
     <script type="text/javascript">
