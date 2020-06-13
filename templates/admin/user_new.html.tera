@@ -135,7 +135,7 @@
           hometown: $('#hometown').val(),
         };
         $.ajax({
-          url: '/api/user-post/signup',
+          url: '/api/user/signup',
           type: "POST",
           contentType: "application/json; charset=utf-8",
           data: JSON.stringify(data),

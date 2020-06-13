@@ -109,7 +109,7 @@
       })
         .then(function() {
           $.ajax({
-            url: '/api/article-delete/' + id,
+            url: '/api/article/' + id,
             type: 'DELETE',
             success: function (data, result) {
               if (data == "SUCCESS") {

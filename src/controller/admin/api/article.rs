@@ -16,7 +16,7 @@ use util::response::ResponseEnum;
 // 	Json(view_articles)
 // }
 
-#[get("/api/article-get/all-article")]
+#[get("/api/article/all")]
 pub fn get_all_articles(db: DB, _user: Admin) -> Json<Vec<ArticleView>> {
 	let result = Article::query_all_published_articles(db.conn());
 	let view_articles: Vec<ArticleView> = result
@@ -26,7 +26,7 @@ pub fn get_all_articles(db: DB, _user: Admin) -> Json<Vec<ArticleView>> {
 	Json(view_articles)
 }
 
-#[post("/api/article-post/new", data="<new_article>")]
+#[post("/api/article", data="<new_article>")]
 pub fn do_add_article(db: DB, new_article: Json<NewArticle>, _user: Admin) -> Json<ResponseEnum> {
 	if NewArticle::insert(db.conn(), &new_article.0) {
 		Json(ResponseEnum::SUCCESS)
@@ -35,7 +35,7 @@ pub fn do_add_article(db: DB, new_article: Json<NewArticle>, _user: Admin) -> Js
 	}
 }
 
-#[put("/api/article-put/update", data="<update_article>")]
+#[put("/api/article", data="<update_article>")]
 pub fn do_update_article(db: DB, update_article: Json<Article>, _user: Admin) -> Json<ResponseEnum> {
 	if Article::update(db.conn(), &update_article.0) {
 		// clear cache
@@ -49,7 +49,7 @@ pub fn do_update_article(db: DB, update_article: Json<Article>, _user: Admin) ->
 	}
 }
 
-#[delete("/api/article-delete/<id>")]
+#[delete("/api/article/<id>")]
 pub fn do_delete_article(db: DB, id: i32, _user: Admin) -> Json<ResponseEnum> {
 	if Article::delete_by_id(db.conn(), id) {
 		let mut hashmap = ARTICLE_CACHE.lock().unwrap();
@@ -60,13 +60,13 @@ pub fn do_delete_article(db: DB, id: i32, _user: Admin) -> Json<ResponseEnum> {
 	}
 }
 
-#[get("/api/article-get/<id>")]
+#[get("/api/article/<id>")]
 pub fn get_article_by_id(db: DB, id: i32) -> Json<Option<Article>> {
 	let result = Article::query_by_id(db.conn(), id);
 	Json(result.first().cloned())
 }
 
-#[get("/api/article-get/hottest-ten-article")]
+#[get("/api/article/hottest-ten-article")]
 pub fn get_hottest_ten_articles(db: DB) -> Json<Vec<ArticleView>> {
 	let result = Article::query_ten_hottest_articles(db.conn());
 	let view_articles: Vec<ArticleView> = result
@@ -76,7 +76,7 @@ pub fn get_hottest_ten_articles(db: DB) -> Json<Vec<ArticleView>> {
 	Json(view_articles)
 }
 
-#[get("/api/article-get/thumb-up/<id>")]
+#[get("/api/article/thumb-up/<id>")]
 pub fn thumb_up(db: DB, id: i32) -> Json<ResponseEnum> {
 	if Article::change_thumb_up(db.conn(), id) {
 		let mut hashmap = ARTICLE_CACHE.lock().unwrap();

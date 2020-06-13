@@ -81,7 +81,7 @@
 				published: ($('#publish').is(":checked")) ? true : false,
 			};
 			$.ajax({
-				url: '/api/comment-put/update',
+				url: '/api/comment',
 				type: "PUT",
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(data),

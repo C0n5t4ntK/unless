@@ -113,7 +113,7 @@
     .on('click', function(event) {
       event.preventDefault();
       $.ajax({
-        url: '/api/article-get/thumb-up/{{article.id}}',
+        url: '/api/article/thumb-up/{{article.id}}',
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function(data, result) {
@@ -167,7 +167,7 @@
         published: {% if user.starred %}true{% else %}false{% endif %},
       };
       $.ajax({
-        url: '/api/comment-post/new',
+        url: '/api/comment',
         type: "POST",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(data),

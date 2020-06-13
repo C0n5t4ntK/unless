@@ -99,7 +99,7 @@
       })
         .then(function() {
           $.ajax({
-            url: '/api/user-delete/' + id,
+            url: '/api/user/' + id,
             type: 'DELETE',
             success: function (data, result) {
               if (data == "SUCCESS") {

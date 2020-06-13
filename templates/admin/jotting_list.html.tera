@@ -91,7 +91,7 @@
       })
         .then(function() {
           $.ajax({
-            url: '/api/jotting-delete/' + id,
+            url: '/api/jotting/' + id,
             type: 'DELETE',
             success: function (data, result) {
               if (data == "SUCCESS") {

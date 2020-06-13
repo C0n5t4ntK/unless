@@ -85,7 +85,7 @@
 				content: $('#jotting_content').val(),
 			};
 			$.ajax({
-				url: '/api/jotting-put/update',
+				url: '/api/jotting',
 				type: "PUT",
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(data),

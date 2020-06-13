@@ -231,7 +231,7 @@
       .on('click', function(event) {
         event.preventDefault();
         $.ajax({
-          url: '/api/user-get/logout',
+          url: '/api/user/logout',
           type: "GET",
           contentType: "application/json; charset=utf-8",
           success: function(data, result) {

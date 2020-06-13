@@ -105,7 +105,7 @@
             .val(),
         };
         $.ajax({
-          url: '/api/user-post/login',
+          url: '/api/user/login',
           type: "POST",
           contentType: "application/json; charset=utf-8",
           data: JSON.stringify(data),
