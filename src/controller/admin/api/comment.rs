@@ -2,7 +2,7 @@ use rocket_contrib::json::Json;
 
 use dal::diesel_pool::{DB};
 use dal::models::comment::*;
-use util::auth::{Admin, User};
+use util::auth::{Admin};
 use util::response::ResponseEnum;
 
 #[get("/api/comment/all")]
@@ -12,7 +12,7 @@ pub fn get_all_comments(db: DB, _user: Admin) -> Json<Vec<Comment>> {
 }
 
 #[post("/api/comment", data="<new_comment>")]
-pub fn do_add_comment(db: DB, new_comment: Json<NewComment>, _user: User) -> Json<ResponseEnum> {
+pub fn do_add_comment(db: DB, new_comment: Json<NewComment>) -> Json<ResponseEnum> {
 	if NewComment::insert(db.conn(), &new_comment.0) {
 		Json(ResponseEnum::SUCCESS)
 	} else {

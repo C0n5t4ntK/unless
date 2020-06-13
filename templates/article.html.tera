@@ -57,11 +57,7 @@
                       </span>
                     </button>
                     <label class="col-lg-5"></label>
-                    {% if user %}
-                    <label id="submit" class="btn btn-default btn-grad col-lg-4">Press to submit^_^</label>
-                    {% else %}
-                    <label class="btn btn-default btn-grad col-lg-4">Login to comment^_^</label>
-                    {% endif %}
+                    <label id="submit" class="btn btn-default btn-grad col-lg-4">Click to biu biu biu ~^_^~</label>
             </div>
           </form>
           {% endif %}
@@ -69,23 +65,24 @@
           <hr>
           <p>
             {% if user %}
-            <button id="profile" class="btn btn-default btn-grad col-lg-2">
-              <a href="/profile/{{comment.user_id}}" target="_blank">
-              <span class="fa-stack fa-lg">
-              <i class="fas fa-square fa-stack-2x"></i>
-              <i class="fa fa-address-card fa-stack-1x fa-inverse"></i>
-              </span>
-              </a>
-            </button>
-            {% else %}
-            <button id="profile" class="btn btn-default btn-grad col-lg-2">
-              <div title="login to see this user's profile">
+              {% if comment.user_id == 0 %}
+            <button id="profile" title="anonym" class="btn btn-default btn-grad col-lg-2">
                 <span class="fa-stack fa-lg">
                 <i class="fas fa-square fa-stack-2x"></i>
-                <i class="fa fa-address-card fa-stack-1x fa-inverse"></i>
-              </span>
-              </div>
+                <i class="fa fa-user-secret fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </button>              
+              {% else %}
+            <button id="profile" title="click to see his/her profile" class="btn btn-default btn-grad col-lg-2">
+              <a href="/profile/{{comment.user_id}}" target="_blank">
+                <span class="fa-stack fa-lg">
+                <i class="fas fa-square fa-stack-2x"></i>
+                <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
             </button>
+              {% endif %}
             {% endif %}
             {{comment.create_time| truncate(length=10, end="") | replace(from="...", to="")}}
           </p>
@@ -147,7 +144,7 @@
       })
     });
 </script>
-{% if user %}
+
 <script type="text/javascript">
   $('#submit')
     .on('click', function(event) {
@@ -161,7 +158,11 @@
         return;
       }
       var data = {
+        {% if user %}
         user_id: parseInt('{{user.id}}'),
+        {% else %}
+        user_id: parseInt('0'),
+        {% endif %}
         article_id: parseInt('{{article.id}}'),
         content: $('#comment').val(),
         published: {% if user.starred %}true{% else %}false{% endif %},
@@ -206,5 +207,4 @@
       })
     });
 </script>
-{% endif %}
 {% endblock extra_js %}
