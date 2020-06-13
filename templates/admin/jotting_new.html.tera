@@ -77,7 +77,7 @@
 				published: ($('#publish').is(":checked")) ? true : false,
 			};
 			$.ajax({
-				url: '/api/jotting-post/new',
+				url: '/api/jotting',
 				type: "POST",
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(data),

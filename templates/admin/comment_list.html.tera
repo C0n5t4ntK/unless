@@ -94,7 +94,7 @@
       })
         .then(function() {
           $.ajax({
-            url: '/api/comment-delete/' + id,
+            url: '/api/comment/' + id,
             type: 'DELETE',
             success: function (data, result) {
               if (data == "SUCCESS") {

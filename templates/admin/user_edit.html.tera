@@ -108,7 +108,7 @@
 				hometown: $('#hometown').val(),
 			};
 			$.ajax({
-				url: '/api/user-put/update',
+				url: '/api/user',
 				type: "PUT",
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(data),

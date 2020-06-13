@@ -151,7 +151,7 @@
 				rendered_content: simplemde.markdown(simplemde.value()),
 			};
 			$.ajax({
-				url: '/api/article-put/update',
+				url: '/api/article',
 				type: "PUT",
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(data),

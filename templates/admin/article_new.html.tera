@@ -139,7 +139,7 @@
 				rendered_content: simplemde.markdown(simplemde.value()),
 			};
 			$.ajax({
-				url: '/api/article-post/new',
+				url: '/api/article',
 				type: "POST",
 				contentType: "application/json; charset=utf-8",
 				data: JSON.stringify(data),

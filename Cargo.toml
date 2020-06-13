@@ -1,6 +1,6 @@
 [package]
 name = "unless"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["C0n5t4ntK <C0n5t4ntK@outlook.com>"]
 
 [[bin]]

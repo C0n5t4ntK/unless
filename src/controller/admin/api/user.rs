@@ -13,7 +13,7 @@ use util::auth::Admin;
 use util::log::{log_to_db, Ip};
 use util::response::ResponseEnum;
 
-#[post("/api/user-post/signup", data = "<user_info>")]
+#[post("/api/user", data = "<user_info>")]
 pub fn do_signup(db: DB, mut cookies: Cookies, user_info: Json<UserInfo>, ip: Ip) -> Json<ResponseEnum> {
 	let new_user = UserInfo::convert_to_new_user(&user_info.0);
 	if NewUser::insert(db.conn(), &new_user) {
@@ -29,7 +29,7 @@ pub fn do_signup(db: DB, mut cookies: Cookies, user_info: Json<UserInfo>, ip: Ip
 	}
 }
 
-#[post("/api/user-post/login", data = "<login>")]
+#[post("/api/user/login", data = "<login>")]
 pub fn do_login(db: DB, mut cookies: Cookies, login: Json<Login>, _ip: Ip) -> Json<ResponseEnum> {
 	let users = User::query_by_email(db.conn(), &login.email);
 	if let Some(user) = users.first() {
@@ -50,7 +50,7 @@ pub fn do_login(db: DB, mut cookies: Cookies, login: Json<Login>, _ip: Ip) -> Js
 	}
 }
 
-#[get("/api/user-get/logout")]
+#[get("/api/user/logout")]
 pub fn do_logout(mut cookies: Cookies) -> Json<ResponseEnum> {
 	cookies.remove_private(Cookie::named("user_id"));
 	cookies.remove_private(Cookie::named("username"));
@@ -85,7 +85,7 @@ pub fn do_logout(mut cookies: Cookies) -> Json<ResponseEnum> {
 // 	}
 // }
 
-#[put("/api/user-put/update", data = "<update_user>")]
+#[put("/api/user", data = "<update_user>")]
 pub fn do_update_user(db: DB, update_user: Json<User>, _user: Admin) -> Json<ResponseEnum> {
 	info!("Request update user");
 	if User::update(db.conn(), &update_user.0) {
@@ -95,7 +95,7 @@ pub fn do_update_user(db: DB, update_user: Json<User>, _user: Admin) -> Json<Res
 	}
 }
 
-#[delete("/api/user-delete/<id>")]
+#[delete("/api/user/<id>")]
 pub fn do_delete_user(db: DB, id: i32, _user: Admin) -> Json<ResponseEnum> {
 	if User::delete_by_id(db.conn(), id) {
 		Json(ResponseEnum::SUCCESS)
