@@ -16,18 +16,6 @@ enabled_comment boolean DEFAULT true NOT NULL,
 slug_url varchar UNIQUE NOT NULL
 );
 
-CREATE OR REPLACE FUNCTION delete_comment_trigger() RETURNS TRIGGER AS $$
-BEGIN
-	DELETE FROM comment WHERE article_id = OLD.id;
-	RETURN OLD;
-END;
-$$
-LANGUAGE 'plpgsql';
-
-CREATE TRIGGER delete_comment BEFORE DELETE
-	ON article FOR EACH ROW
-		EXECUTE PROCEDURE delete_comment_trigger();
-
 INSERT INTO article VALUES (1, 'About', 'All About My Blog', 'Welcome', 'Welcome',
 current_timestamp, current_timestamp, 'About', 'GeekyRecording', 'About&Blog&Site', 0, 0, true, false, 'about');
 
