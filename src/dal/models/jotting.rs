@@ -1,4 +1,4 @@
-use chrono::NaiveDateTime;
+use chrono::{Duration, NaiveDateTime};
 use diesel;
 use diesel::pg::Pg;
 use diesel::pg::PgConnection;
@@ -27,6 +27,7 @@ impl Jotting {
 	fn published() -> jotting::BoxedQuery<'static, Pg> {
 		all_jottings
 			.filter(jotting::published.eq(true))
+			.filter(jotting::create_time.ge(get_now().checked_add_signed(Duration::days(-14)).unwrap()))
 			.order(jotting::create_time.desc())
 			.into_boxed()
 	}

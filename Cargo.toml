@@ -20,8 +20,8 @@ error-chain = "0.12.1"
 lazy_static = "1.1.0"
 r2d2 = "0.8.5"
 r2d2-diesel = "1.0.0"
-rocket = "0.4.2"
-rocket_codegen = "0.4.2"
+rocket = "0.4.9"
+rocket_codegen = "0.4.9"
 serde = "1.0.70"
 serde_derive = "1.0.70"
 serde_json = "1.0.24"
@@ -43,4 +43,4 @@ version = "1.4.2"
 [dependencies.rocket_contrib]
 default-features = false
 features = ["handlebars_templates", "tera_templates", "json"]
-version = "0.4.2"
+version = "0.4.9"
