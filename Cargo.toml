@@ -29,7 +29,7 @@ tera = "0.11.20"
 rust-crypto = "0.2.36"
 bcrypt = "0.13.0"
 rand = "0.7.2"
-ipnetwork = "0.16.0"
+ipnetwork = "0.18.0"
 fern = { version = "0.5.8", features = ["colored"] }
 
 [dependencies.chrono]
@@ -38,7 +38,7 @@ version = "0.4.9"
 
 [dependencies.diesel]
 features = ["postgres", "chrono","network-address"]
-version = "1.4.2"
+version = "1.4.8"
 
 [dependencies.rocket_contrib]
 default-features = false
