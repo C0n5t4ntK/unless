@@ -27,8 +27,7 @@ impl Jotting {
 	fn published() -> jotting::BoxedQuery<'static, Pg> {
 		all_jottings
 			.filter(jotting::published.eq(true))
-			.filter(jotting::create_time.ge(get_now().checked_add_signed(Duration::days(-14)).unwrap()))
-			.order(jotting::create_time.desc())
+			.filter(jotting::create_time.ge(get_now().checked_add_signed(Duration::days(-30)).unwrap()))
 			.into_boxed()
 	}
 
@@ -41,12 +40,12 @@ impl Jotting {
 
 	pub fn pagination_query_all(conn: &PgConnection, page: i64) -> (Vec<Jotting>, i64) {
 		(Jotting::published()
+			.order(jotting::create_time.desc())
 			.offset((page - 1) * 10)
 			.limit(10)
 			.load::<Jotting>(conn)
 			.expect("Error loading jottings!"),
-		all_jottings
-			.filter(jotting::published.eq(true))
+		Jotting::published()
 			.count()
 			.get_result::<i64>(conn)
 			.expect("Error loading summary!"))
